@@ -1,1 +1,42 @@
-r
+import capos.*
+
+describe "Capos parte 1" {
+    //method initialize
+  test "Rolando sin artefactos y capacidad 2, encuentra la espada del destino, el libro y el collar y solo agarra los 2 primeros" {
+    assert.that(rolando.artefactosConjunto().isEmpty())
+    rolando.encontrar(espada)
+    assert.that(rolando.artefactosConjunto().contains(espada))
+    rolando.encontrar(libro)
+    rolando.encontrar(collar)
+    assert.notThat(rolando.artefactosConjunto().contains(collar))
+  }
+
+  test "Rolando con espada y libro, los deja en el castillo, luego con collar pasa lo mismo" {
+    
+    rolando.encontrar(espada)
+    rolando.encontrar(libro)
+    rolando.irAMorada()
+    assert.that(rolando.artefactosConjunto().isEmpty())
+    assert.equals(#{espada,libro}, castillo.baul())
+    rolando.encontrar(collar)
+    rolando.irAMorada()
+    assert.that(rolando.artefactosConjunto().isEmpty())
+    assert.equals(#{espada, libro, collar}, castillo.baul())
+  }
+
+  test "Si el castillo tiene el collar y la espada y Rolando la armadura, entonces sus poseciones son esos 3 artefactos" {
+    castillo.depositar(#{collar, espada})
+    rolando.encontrar(armadura)
+    assert.equals(#{collar, espada, armadura}, rolando.posesiones())
+  }
+
+  test "Historial" {
+    rolando.encontrar(espada)
+    rolando.encontrar(libro)
+    rolando.encontrar(collar)
+    rolando.irAMorada()
+    rolando.encontrar(armadura)
+    rolando.encontrar(collar)
+    assert.equals([espada, libro, collar, armadura, collar], rolando.artefactosLista())
+  }
+}
