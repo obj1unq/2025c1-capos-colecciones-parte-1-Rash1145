@@ -40,3 +40,40 @@ describe "Capos parte 1" {
     assert.equals([espada, libro, collar, armadura, collar], rolando.artefactosLista())
   }
 }
+
+describe "Parte 2" {
+  test "Poder de pelea de Rolando y batalla" {
+    rolando.poderBase(5)
+    rolando.capacidad(3)
+    rolando.encontrar(espada)
+    assert.equals(5, espada.poder(rolando))
+    rolando.encontrar(armadura)
+    assert.equals(6, armadura.poder(rolando))
+    rolando.encontrar(collar)
+    assert.equals(3, collar.poder(rolando))
+
+    rolando.batalla()
+    assert.equals(6, rolando.poderBase())
+    assert.equals(3, espada.poder(rolando))
+    assert.equals(6, armadura.poder(rolando))
+    assert.equals(3, collar.poder(rolando))
+  }
+
+  test "Poder de pelea" {
+    rolando.poderBase(5)
+    rolando.capacidad(3)
+    rolando.encontrar(espada)
+    rolando.encontrar(armadura)
+    rolando.encontrar(collar)
+    assert.equals(19, rolando.poder())
+  }
+
+  test "Libro de hechizos"{
+    rolando.poderBase(5)
+    rolando.encontrar(libro)
+    castillo.baul(#{espada, armadura, collar})
+    libro.hechizos([bendicion, invisibilidad, invocacion])
+    assert.equals(4, libro.poder(rolando))
+    
+  }
+}
